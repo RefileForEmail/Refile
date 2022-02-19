@@ -12,13 +12,13 @@ import GetAttachmentsData from './GetAttachmentsData.json'
 import { Attachment } from './models/Attachment';
 import AttachmentModel from './models/AttachmentModel';
 
-function LandingPage() {
+function LandingPage({setUserId}) {
   React.useEffect(() => pushingP2(), [])
 
 
   const [folderSelected, setFolderSelected] = useState();
   const [threadSelected, setThreadSelected] = useState();
-  var url = 'http://localhost:8080/users/1';
+  var baseUrl = 'https://refile.herokuapp.com/';
 
   const folderPresetList = [
     {name: 'All attachments'},
@@ -55,8 +55,9 @@ function LandingPage() {
   }
 
   async function pushingP3() {
-    var result = await Axios.get(url);
-    console.log(result.data);
+    var result = await Axios.get(baseUrl +"attachments/1", { withCredentials: true});
+
+    console.log("The Heroku Api Response is: " + result.data);
   }
   const [attachments, setAttachments] = useState([]);
   const [workspace, setWorkspace] = useState('files');
@@ -73,12 +74,13 @@ function LandingPage() {
 
   return (
     <div className="app">
-      <button onClick={pushingP3}>PUSHING USERS</button>
+      <button onClick={pushingP3}>PUSHING Attachmennts</button>
       <button onClick={pushingP2}>PUSHING PPP</button>
 
       <div className="app__header" onChange={pushingP2}>
         <p className="header__title">Attachment Manager</p>
         <p className="header__subtitle">sydefydp2022@gmail.com</p>
+
         <form className="header__searchform" >
           <input 
             type="text"
